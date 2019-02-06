@@ -21,3 +21,8 @@ request
 session
 
 
+request.args.get('argv',alter)
+request.headers
+request.form
+
+return somthing,404
