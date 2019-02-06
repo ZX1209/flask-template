@@ -1,4 +1,5 @@
 from flask import Flask,current_app,g,session,request,render_template,jsonify
+from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 # route specify
@@ -24,7 +25,20 @@ def testFloatInt(var):
 def testPostFloatInt(var):
     return str(var)
 
+@app.route('/test/pon') # method 默认get,,
+def pon():
+    return jsonify([request.method,str(request.headers)],str(request.args))
 
+
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        f = request.files['the_file']
+        f.save('./static/'+secure_filename(f.filename))
+        return 'finished'
+    else:
+        return render_template('uploadFile.html')
 
 if __name__ == "__main__":
     app.run(debug=True,host="127.0.0.1",port=5000)
