@@ -1,0 +1,100 @@
+{% extends 'layui-base.html' %}
+
+
+{% block title %}
+{% endblock %}
+
+{% block head %}
+<script>
+    // layui.use('flow', function () {
+    //     var $ = layui.jquery; //不用额外加载jQuery，flow模块本身是有依赖jQuery的，直接用即可。
+    //     var flow = layui.flow;
+    //     flow.load({
+    //         elem: '#demo' //指定列表容器
+    //         , done: function (page, next) { //到达临界点（默认滚动触发），触发下一页
+    //             var lis = [];
+    //             //以jQuery的Ajax请求为例，请求下一页数据（注意：page是从2开始返回）
+    //             $.get('/api/list?page=' + page, function (res) {
+    //                 //假设你的列表返回在data集合中
+    //                 layui.each(res.data, function (index, item) {
+    //                     lis.push('<li>' + item.title + '</li>');
+    //                 });
+
+    //                 //执行下一页渲染，第二参数为：满足“加载更多”的条件，即后面仍有分页
+    //                 //pages为Ajax返回的总页数，只有当前页小于总页数的情况下，才会继续出现加载更多
+    //                 next(lis.join(''), page < res.pages);
+    //             });
+    //         }
+    //     });
+    // });
+
+</script>
+
+{% endblock %}
+
+{% block before_body %}
+{% endblock %}
+
+
+{% block body %}
+
+<div class="layui-main">
+
+
+
+
+    {% for item in childrens %}
+    <div class="layui-row">
+        <div class="layui-col-xs3 layui-col-xs-offset1" style="padding: 10px 0px;">
+            <div class="grid-demo">
+
+
+                {% if  item.isVideoFile() %}
+
+                <video id="{{ item }}" width="400px" height="300px" controls preload="none">
+                    <source src="{{ resourceUrl }}{{ item }}" type='video/mp4' />
+                </video>
+                <p>
+                    {{ item.name }}
+                </p>
+
+                {% elif item.is_dir() %}
+
+                <a href="{{ cwdUrl }}{{ item }}">
+                    <img src="{{ url_for('static', filename='./pictures/folder-yellow.svg') }}" alt="no pic">
+                    <br />
+                    <p>
+                        {{ item.name }}
+                    </p>
+                </a>
+
+
+
+                {% else %}
+
+                <a href="{{ cwdUrl }}{{ item }}">
+                    <img src="{{ url_for('static', filename='./pictures/unknown.svg') }}" alt="no pic">
+                    <br />
+                    <p>
+                        {{ item.name }}
+                    </p>
+                </a>
+
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+
+</div>
+
+
+
+
+{% endblock %}
+
+{% block after_body %}
+{% endblock %}
