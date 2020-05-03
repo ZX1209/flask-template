@@ -45,7 +45,8 @@
     {% if  item.isVideoFile() %}
     <div class="layui-row">
         <div class="layui-col-xs10 layui-col-xs-offset2" style="padding: 10px 0px;">
-            <video id="{{ item }}" width="800px" height="600px" controls preload="none">
+            <video id="{{ item }}" width="800px" height="600px" controls preload="none"
+                poster="{{ url_for('static', filename='covers/') }}{{ item.stem }}.jpg">
                 <source src="{{ resourceUrl }}{{ item }}" type='video/mp4' />
             </video>
             <h1>
