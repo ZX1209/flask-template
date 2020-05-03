@@ -7,6 +7,8 @@ from flask import (
     render_template,
     jsonify,
     send_file,
+    redirect,
+    url_for,
 )
 from werkzeug.utils import secure_filename
 
@@ -44,12 +46,22 @@ def sortedFileList(dirPath):
         else:
             sortedList.append(path)
 
+    if str(dirPath) != ".":
+        sortedList.insert(0, dirPath / "../")
+
+    log.debug(sortedList)
+
     return sortedList
 
 
-@app.route("/testFolderView/", defaults={"var": ""})
+@app.route("/")
+def homepage():
+    return redirect(url_for("testFolderView"))
+
+
+@app.route("/testFolderView/", defaults={"var": "upside"})
 @app.route("/testFolderView/<path:var>")
-def testFolderView(var=""):
+def testFolderView(var="upside"):
     intoPath = curPath / var
     log.debug((intoPath, basePath, var))
     # log.debug((intoPath.resolve(), basePath.resolve(), var))
@@ -65,9 +77,7 @@ def testFolderView(var=""):
         else:
             return render_template("video.html", cwdUrl="/resources/", item=intoPath)
     else:
-        return render_template(
-            "folderView.html", cwdUrl="/testFolderView/", childrens=["../"]
-        )
+        return "path not exists"
 
 
 @app.route("/resources/", defaults={"var": ""})
@@ -79,9 +89,12 @@ def getRes(var):
             if intoPath.suffix == ".mp4":
                 filename = intoPath.resolve()
                 return send_file(filename, attachment_filename=filename, conditional=True)
-            return send_file(intoPath.resolve())
 
-    return "error"
+            return send_file(intoPath.resolve())
+        else:
+            return "not a file"
+
+    return "no suce file"
 
 
 if __name__ == "__main__":

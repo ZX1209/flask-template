@@ -1,0 +1,9 @@
+// {
+//     "workbench.colorCustomizations": {
+//         "editor.selectionBackground": "#ff78393a", //Current SELECTED text
+//         // "editor.selectionHighlightBackground": "#ff000071", //same content as the selection
+//         // "editor.findMatchBackground": "#00cc44a8", //Current SEARCH MATCH
+//         // "editor.findMatchHighlightBackground": "#ff7b00a1" //Other SEARCH MATCHES
+//         "editor.selectionHighlightBorder": "#ff5100"
+//     }
+// }
